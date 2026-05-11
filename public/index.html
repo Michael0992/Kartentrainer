@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vokabeltrainer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <span class="logo">🗂 Vokabeltrainer</span>
+    <nav id="breadcrumb"></nav>
+  </header>
+
+  <!-- ── Hauptmenü ─────────────────────────────── -->
+  <div id="view-menu" class="view active">
+    <div class="view-header">
+      <h2>Meine Stapel</h2>
+      <button id="btn-neuer-stapel" class="btn-primary">+ Neuer Stapel</button>
+    </div>
+    <div id="stapel-liste"></div>
+    <p id="leere-meldung" class="leer-hinweis" style="display:none">
+      Noch keine Stapel vorhanden — erstelle deinen ersten!
+    </p>
+  </div>
+
+  <!-- ── Bearbeitungs-Modus ─────────────────────── -->
+  <div id="view-bearbeiten" class="view">
+    <div class="view-header">
+      <h2 id="bearbeiten-titel"></h2>
+      <button id="btn-karte-hinzufuegen" class="btn-primary">+ Karte hinzufügen</button>
+    </div>
+    <div id="karten-liste"></div>
+    <p id="karten-leer" class="leer-hinweis" style="display:none">
+      Noch keine Karten — füge deine erste hinzu!
+    </p>
+  </div>
+
+  <!-- ── Abfrage-Modus ──────────────────────────── -->
+  <div id="view-abfrage" class="view">
+
+    <div id="stapel-bereich" title="Karte ziehen">
+      <div id="stapel-visual">
+        <div class="stapel-phantom p1"></div>
+        <div class="stapel-phantom p2"></div>
+        <div class="stapel-phantom p3"></div>
+      </div>
+      <span id="stapel-counter" class="counter-badge">0</span>
+      <p id="stapel-hinweis">Klicke auf den Stapel</p>
+    </div>
+
+    <div id="karte-bereich">
+      <div id="karte" class="karte">
+        <div class="karte-inner">
+          <div class="karte-vorderseite">
+            <span class="karte-label">Frage</span>
+            <p id="frage-text"></p>
+          </div>
+          <div class="karte-rueckseite">
+            <span class="karte-label">Antwort</span>
+            <p id="antwort-text"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="fertig-banner" style="display:none">
+      <div class="fertig-inhalt">
+        <div class="fertig-icon">🎉</div>
+        <h3>Alle Karten geschafft!</h3>
+        <p id="fertig-text"></p>
+        <button id="btn-neu-mischen" class="btn-primary">↺ Nochmal mischen</button>
+      </div>
+    </div>
+
+    <div id="abfrage-controls">
+      <button id="btn-vorherige" class="btn-ghost" disabled>◄ Zurück</button>
+      <span id="fortschritt" class="fortschritt-text">0 / 0</span>
+      <button id="btn-abfrage-mischen" class="btn-ghost">↺ Mischen</button>
+    </div>
+
+  </div>
+
+  <!-- ── Modal ─────────────────────────────────── -->
+  <div id="modal-overlay" class="modal-overlay" style="display:none">
+    <div class="modal">
+      <h3 id="modal-titel"></h3>
+      <form id="modal-form">
+        <div id="modal-felder"></div>
+        <div class="modal-buttons">
+          <button type="button" class="btn-ghost" id="modal-cancel">Abbrechen</button>
+          <button type="submit" class="btn-primary">Speichern</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

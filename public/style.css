@@ -1,0 +1,463 @@
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #f4f1eb;
+  --card-cream: #fffdf4;
+  --card-cream2: #fef9e5;
+  --card-cream3: #fdf5d0;
+  --card-back: #eef4ff;
+  --card-border: #e8ddb8;
+  --card-border-back: #bdd3f5;
+  --shadow-card: 0 6px 28px rgba(0,0,0,0.13);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.07);
+  --accent: #4a72e8;
+  --accent-dark: #3459c8;
+  --text: #1c1c2e;
+  --text-muted: #72748a;
+  --border: #e2e0d8;
+  --danger: #e84a4a;
+  --radius: 14px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ── Header ──────────────────────────────────── */
+header {
+  background: #fff;
+  padding: 0.9rem 2rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.logo {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+#breadcrumb {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+#breadcrumb a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+#breadcrumb a:hover { text-decoration: underline; }
+
+/* ── Views ───────────────────────────────────── */
+.view { display: none; }
+.view.active { display: block; }
+
+#view-menu,
+#view-bearbeiten {
+  max-width: 720px;
+  margin: 2rem auto;
+  padding: 0 1.25rem;
+}
+
+/* ── View header ─────────────────────────────── */
+.view-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.view-header h2 { font-size: 1.45rem; }
+
+/* ── Buttons ─────────────────────────────────── */
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 0.55rem 1.25rem;
+  border-radius: 9px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+.btn-primary:hover { background: var(--accent-dark); }
+.btn-primary:active { transform: scale(0.97); }
+
+.btn-secondary {
+  background: #fff;
+  color: var(--text);
+  border: 1.5px solid var(--border);
+  padding: 0.45rem 1rem;
+  border-radius: 9px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-secondary:hover { background: var(--bg); }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1.5px solid var(--border);
+  padding: 0.45rem 1rem;
+  border-radius: 9px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.btn-ghost:hover { background: #fff; color: var(--text); }
+.btn-ghost:disabled { opacity: 0.35; cursor: not-allowed; }
+
+.btn-danger {
+  background: #fff;
+  color: var(--danger);
+  border: 1.5px solid #f5c0c0;
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-danger:hover { background: #fff0f0; }
+
+/* ── Stapel-Liste (Menü) ─────────────────────── */
+.stapel-item {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.4rem;
+  margin-bottom: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.stapel-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+
+.stapel-info { display: flex; flex-direction: column; gap: 0.2rem; }
+.stapel-name { font-size: 1.05rem; font-weight: 600; }
+.stapel-anzahl { font-size: 0.82rem; color: var(--text-muted); }
+.stapel-aktionen { display: flex; gap: 0.5rem; flex-shrink: 0; }
+
+/* ── Karten-Liste (Bearbeiten) ───────────────── */
+.karten-eintrag {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.95rem 1.2rem;
+  margin-bottom: 0.65rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.karten-inhalt { flex: 1; min-width: 0; }
+.karten-frage { font-weight: 600; margin-bottom: 0.2rem; }
+.karten-antwort { font-size: 0.88rem; color: var(--text-muted); }
+.karten-aktionen { display: flex; gap: 0.5rem; flex-shrink: 0; }
+
+.leer-hinweis {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 3rem 1rem;
+  font-size: 0.95rem;
+}
+
+/* ── Abfrage-Modus Layout ────────────────────── */
+#view-abfrage {
+  max-width: 520px;
+  margin: 2rem auto;
+  padding: 0 1.25rem;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+}
+#view-abfrage.active { display: flex; }
+
+/* ── Stapel-Bereich ──────────────────────────── */
+#stapel-bereich {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 0.5rem;
+  padding: 1rem 0 0.5rem;
+  user-select: none;
+}
+
+#stapel-bereich.leer { cursor: default; }
+
+#stapel-visual {
+  position: relative;
+  width: 320px;
+  height: 200px;
+}
+
+.stapel-phantom {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+  border: 2px solid var(--card-border);
+  transition: transform 0.2s ease, opacity 0.3s;
+}
+
+.stapel-phantom.p1 {
+  background: var(--card-cream3);
+  transform: rotate(-5deg) translateY(10px) scale(0.97);
+  box-shadow: var(--shadow-card);
+  z-index: 1;
+}
+.stapel-phantom.p2 {
+  background: var(--card-cream2);
+  transform: rotate(3deg) translateY(5px) scale(0.985);
+  box-shadow: var(--shadow-card);
+  z-index: 2;
+}
+.stapel-phantom.p3 {
+  background: var(--card-cream);
+  transform: rotate(0deg);
+  box-shadow: var(--shadow-card);
+  z-index: 3;
+}
+
+#stapel-bereich:not(.leer):hover .stapel-phantom.p3 {
+  transform: rotate(0deg) translateY(-6px);
+}
+
+.stapel-phantom.verborgen { opacity: 0; pointer-events: none; }
+
+.counter-badge {
+  margin-top: 0.6rem;
+  background: rgba(0,0,0,0.08);
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 3px 12px;
+  border-radius: 20px;
+}
+
+#stapel-hinweis {
+  margin-top: 0.4rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  height: 1.3em;
+}
+
+/* ── Karten-Bereich ──────────────────────────── */
+#karte-bereich {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 220px;
+  perspective: 1200px;
+  margin: 0.25rem 0;
+}
+
+.karte {
+  width: 340px;
+  height: 210px;
+  cursor: pointer;
+  display: none;
+  user-select: none;
+}
+
+.karte.sichtbar { display: block; }
+
+.karte-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.55s cubic-bezier(0.4, 0.2, 0.2, 1);
+}
+
+.karte.geflippt .karte-inner { transform: rotateY(180deg); }
+
+.karte-vorderseite,
+.karte-rueckseite {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+  border: 2px solid var(--card-border);
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  gap: 0.65rem;
+  box-shadow: var(--shadow-card);
+}
+
+.karte-vorderseite { background: var(--card-cream); }
+.karte-rueckseite {
+  background: var(--card-back);
+  border-color: var(--card-border-back);
+  transform: rotateY(180deg);
+}
+
+.karte-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.karte-vorderseite p,
+.karte-rueckseite p {
+  font-size: 1.15rem;
+  font-weight: 500;
+  text-align: center;
+  line-height: 1.45;
+}
+
+.karte.sichtbar:hover .karte-vorderseite,
+.karte.sichtbar:hover .karte-rueckseite {
+  box-shadow: 0 10px 40px rgba(74,114,232,0.18);
+}
+
+/* ── Karte Animationen ───────────────────────── */
+@keyframes karte-rein {
+  from { opacity: 0; transform: translateY(-150px) scale(0.82); }
+  to   { opacity: 1; transform: translateY(0)       scale(1);   }
+}
+
+@keyframes karte-raus {
+  from { opacity: 1; transform: translateY(0)       scale(1);   }
+  to   { opacity: 0; transform: translateY(-150px) scale(0.82); }
+}
+
+.karte.animiere-rein {
+  animation: karte-rein 0.38s cubic-bezier(0.34, 1.5, 0.64, 1) forwards;
+}
+.karte.animiere-raus {
+  animation: karte-raus 0.27s ease-in forwards;
+}
+
+/* ── Fertig-Banner ───────────────────────────── */
+#fertig-banner {
+  width: 100%;
+  text-align: center;
+  padding: 2rem 1.5rem;
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  animation: karte-rein 0.35s cubic-bezier(0.34, 1.5, 0.64, 1);
+}
+
+.fertig-icon { font-size: 2.8rem; margin-bottom: 0.5rem; }
+#fertig-banner h3 { font-size: 1.3rem; margin-bottom: 0.4rem; }
+#fertig-banner p  { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.2rem; }
+
+/* ── Abfrage-Controls ────────────────────────── */
+#abfrage-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+  margin-top: 0.75rem;
+}
+
+.fortschritt-text {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  min-width: 56px;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* ── Modal ───────────────────────────────────── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.38);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  backdrop-filter: blur(3px);
+}
+
+.modal {
+  background: #fff;
+  border-radius: 18px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 420px;
+  margin: 1rem;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.22);
+  animation: modal-pop 0.22s cubic-bezier(0.34, 1.5, 0.64, 1);
+}
+
+@keyframes modal-pop {
+  from { transform: scale(0.88); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}
+
+.modal h3 { font-size: 1.15rem; margin-bottom: 1.4rem; }
+
+.modal-feld { margin-bottom: 1rem; }
+
+.modal-feld label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-muted);
+  margin-bottom: 0.4rem;
+}
+
+.modal-feld input,
+.modal-feld textarea {
+  width: 100%;
+  padding: 0.6rem 0.85rem;
+  border: 1.5px solid var(--border);
+  border-radius: 9px;
+  font-size: 1rem;
+  font-family: inherit;
+  outline: none;
+  resize: vertical;
+  transition: border-color 0.15s;
+  background: var(--bg);
+}
+
+.modal-feld input:focus,
+.modal-feld textarea:focus {
+  border-color: var(--accent);
+  background: #fff;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.65rem;
+  margin-top: 1.5rem;
+}
