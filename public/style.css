@@ -78,9 +78,16 @@ header {
 /* ── View header ─────────────────────────────── */
 .view-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   margin-bottom: 1.5rem;
+  gap: 10px;
+  position:fixed;
+  background-color: white;
+  left: 0;
+  top: 50px;
+  width: 100%;
+  padding: 10px;
 }
 
 .view-header h2 { font-size: 1.45rem; }
@@ -140,6 +147,10 @@ header {
 .btn-danger:hover { background: #fff0f0; }
 
 /* ── Stapel-Liste (Menü) ─────────────────────── */
+
+#stapel-liste, #karten-liste {
+  margin-top: 60px;
+}
 .stapel-item {
   background: #fff;
   border: 1px solid var(--border);
