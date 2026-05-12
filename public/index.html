@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vokabeltrainer</title>
+  <title>KartenTrainer</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
   <header>
-    <span class="logo">🗂 Vokabeltrainer</span>
+    <span class="logo">🗂 KartenTrainer</span>
     <nav id="breadcrumb"></nav>
   </header>
 
@@ -28,7 +28,10 @@
   <!-- ── Bearbeitungs-Modus ─────────────────────── -->
   <div id="view-bearbeiten" class="view">
     <div class="view-header">
-      <h2 id="bearbeiten-titel"></h2>
+      <div class="titel-mit-aktion">
+        <h2 id="bearbeiten-titel"></h2>
+        <button id="btn-stapel-umbenennen" class="btn-ghost btn-klein" title="Umbenennen">✎</button>
+      </div>
       <button id="btn-karte-hinzufuegen" class="btn-primary">+ Karte hinzufügen</button>
     </div>
     <div id="karten-liste"></div>
@@ -93,6 +96,17 @@
           <button type="submit" class="btn-primary">Speichern</button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- ── Bestätigungsdialog ──────────────────── -->
+  <div id="confirm-overlay" class="modal-overlay" style="display:none">
+    <div class="modal confirm-modal">
+      <p id="confirm-text"></p>
+      <div class="modal-buttons">
+        <button type="button" class="btn-ghost" id="confirm-nein">Abbrechen</button>
+        <button type="button" class="btn-danger" id="confirm-ja">Löschen</button>
+      </div>
     </div>
   </div>
 

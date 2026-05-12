@@ -66,7 +66,8 @@ async function ladeMenu() {
       <div class="stapel-aktionen">
         <button class="btn-primary"  data-ueben="${s.id}">Üben</button>
         <button class="btn-secondary" data-edit="${s.id}">Bearbeiten</button>
-        <button class="btn-danger"   data-del="${s.id}">✕</button>
+        <button class="btn-secondary" data-rename="${s.id}" data-name="${escAttr(s.bezeichner)}">✎</button>
+        <button class="btn-danger"   data-del="${s.id}" data-name="${escAttr(s.bezeichner)}">✕</button>
       </div>
     </div>
   `).join('');
@@ -77,11 +78,24 @@ async function ladeMenu() {
   liste.querySelectorAll('[data-edit]').forEach(btn =>
     btn.addEventListener('click', () => ladeBearbeiten(stapel.find(s => s.id == btn.dataset.edit)))
   );
+  liste.querySelectorAll('[data-rename]').forEach(btn =>
+    btn.addEventListener('click', () => {
+      const s = stapel.find(x => x.id == btn.dataset.rename);
+      oeffneModal('Stapel umbenennen', [
+        { name: 'bezeichner', label: 'Name', type: 'input', value: s.bezeichner },
+      ], async felder => {
+        await api('PUT', `/api/stapel/${s.id}`, { bezeichner: felder.bezeichner });
+        schliesseModal();
+        ladeMenu();
+      });
+    })
+  );
   liste.querySelectorAll('[data-del]').forEach(btn =>
-    btn.addEventListener('click', async () => {
-      if (!confirm('Stapel wirklich löschen?')) return;
-      await api('DELETE', `/api/stapel/${btn.dataset.del}`);
-      ladeMenu();
+    btn.addEventListener('click', () => {
+      zeigeBestaetigung(`Stapel „${btn.dataset.name}" wirklich löschen? Alle Karten gehen verloren.`, async () => {
+        await api('DELETE', `/api/stapel/${btn.dataset.del}`);
+        ladeMenu();
+      });
     })
   );
 }
@@ -104,7 +118,19 @@ async function ladeBearbeiten(stapel) {
     { label: 'Meine Stapel', view: 'menu' },
     { label: stapel.bezeichner },
   ]);
-  document.getElementById('bearbeiten-titel').textContent = stapel.bezeichner;
+  const titelEl = document.getElementById('bearbeiten-titel');
+  titelEl.textContent = stapel.bezeichner;
+
+  document.getElementById('btn-stapel-umbenennen').onclick = () => {
+    oeffneModal('Stapel umbenennen', [
+      { name: 'bezeichner', label: 'Name', type: 'input', value: aktuellerStapel.bezeichner },
+    ], async felder => {
+      await api('PUT', `/api/stapel/${aktuellerStapel.id}`, { bezeichner: felder.bezeichner });
+      aktuellerStapel.bezeichner = felder.bezeichner;
+      schliesseModal();
+      ladeBearbeiten(aktuellerStapel);
+    });
+  };
 
   const karten = await api('GET', `/api/stapel/${stapel.id}/karten`);
   const liste  = document.getElementById('karten-liste');
@@ -145,9 +171,11 @@ async function ladeBearbeiten(stapel) {
   );
 
   liste.querySelectorAll('[data-karte-del]').forEach(btn =>
-    btn.addEventListener('click', async () => {
-      await api('DELETE', `/api/karten/${btn.dataset.karteDel}`);
-      ladeBearbeiten(aktuellerStapel);
+    btn.addEventListener('click', () => {
+      zeigeBestaetigung('Diese Karte wirklich löschen?', async () => {
+        await api('DELETE', `/api/karten/${btn.dataset.karteDel}`);
+        ladeBearbeiten(aktuellerStapel);
+      });
     })
   );
 }
@@ -360,6 +388,25 @@ document.getElementById('modal-overlay').addEventListener('click', e => {
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') schliesseModal();
 });
+
+// ── Bestätigungsdialog ────────────────────────────────────────────────────────
+function zeigeBestaetigung(nachricht, onConfirm) {
+  const overlay = document.getElementById('confirm-overlay');
+  document.getElementById('confirm-text').textContent = nachricht;
+  overlay.style.display = 'flex';
+
+  const jaBtn = document.getElementById('confirm-ja');
+  const neinBtn = document.getElementById('confirm-nein');
+
+  function aufraeumen() {
+    overlay.style.display = 'none';
+    jaBtn.replaceWith(jaBtn.cloneNode(true));
+    neinBtn.replaceWith(neinBtn.cloneNode(true));
+  }
+
+  jaBtn.addEventListener('click', () => { aufraeumen(); onConfirm(); }, { once: true });
+  neinBtn.addEventListener('click', () => aufraeumen(), { once: true });
+}
 
 // ── Utils ─────────────────────────────────────────────────────────────────────
 function esc(s) {
