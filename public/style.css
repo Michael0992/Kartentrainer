@@ -87,7 +87,8 @@ header {
   left: 0;
   top: 50px;
   width: 100%;
-  padding: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 .view-header h2 { font-size: 1.45rem; }
@@ -149,7 +150,7 @@ header {
 /* ── Stapel-Liste (Menü) ─────────────────────── */
 
 #stapel-liste, #karten-liste {
-  margin-top: 60px;
+  margin-top: 80px;
 }
 .stapel-item {
   background: #fff;
