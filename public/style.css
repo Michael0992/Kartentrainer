@@ -224,12 +224,18 @@ header {
   user-select: none;
 }
 
-#stapel-bereich.leer { cursor: default; }
+#stapel-bereich.leer { 
+  cursor: default; 
+}
 
 #stapel-visual {
   position: relative;
   width: 320px;
-  height: 200px;
+  height: 200px; /* Standard: sichtbar */
+}
+
+#stapel-visual:has(.stapel-phantom.p3.verborgen) {
+  height: auto; 
 }
 
 .stapel-phantom {
@@ -288,7 +294,6 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 220px;
   perspective: 1200px;
   margin: 0.25rem 0;
 }
